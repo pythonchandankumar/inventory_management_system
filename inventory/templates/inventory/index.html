@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Index
+{% endblock %}
+
+{% block content %}
+    <div class='container'>
+            {% if messages %}
+                {% for message in messages %}
+                <span{% if message.tags %} class="{{ message.tags }} alert alert-danger text-center" role="alert"{% endif %}>{{ message }}</span>
+                {% endfor %}
+        
+            {% endif %}
+
+        <h3 class='mt-4 mb-4'> Welcome {{user.username|capfirst}} </h3>
+        <table class="table table-hover table-bordered text-center">
+            <thead>
+              <tr>
+                <th scope="col">Sl No</th>
+                <th scope="col">Product Name</th>
+                <th scope="col">Description</th>
+                <th scope="col">Available</th>
+                <th scope="col">Options</th>
+              </tr>
+            </thead>
+            <tbody>
+                {% for row in model %}
+                    <tr>
+                        <td>{{ forloop.counter }}</td>
+                        <td>{{ row.product_name }}</td>
+                        <td>{{ row.product_description }}</td>
+                        <td>{{ row.available_quantity }}</td>
+                        <td>
+                            <a class='btn btn-danger' href={% url 'delete-stock' row.product_name %}>Delete</a></td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+          </table>
+    </div>
+{% endblock %}
